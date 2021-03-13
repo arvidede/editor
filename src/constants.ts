@@ -1,14 +1,138 @@
+const asMap = (list: string[]) =>
+    list.reduce((rest: Record<string, boolean>, it: string) => {
+        rest[it] = true
+        return rest
+    }, {})
+
+export const selectors = asMap([
+    '&',
+    '*',
+    '+',
+    '>',
+    '||',
+    '~',
+    ':active',
+    '::after',
+    ':after',
+    ':any-link',
+    '::attr',
+    ':autofill',
+    '::backdrop',
+    '::before',
+    ':before',
+    ':blank',
+    ':checked',
+    '::content',
+    ':current',
+    ':current',
+    '/deep/',
+    ':default',
+    ':defined',
+    ':dir',
+    ':disabled',
+    ':empty',
+    ':enabled',
+    '::file-selector-button',
+    ':first',
+    ':first-child',
+    'first-child',
+    '::first-letter',
+    ':first-letter',
+    '::first-line',
+    ':first-line',
+    ':first-of-page',
+    ':first-of-type',
+    ':focus',
+    ':focus-visible',
+    ':focus-within',
+    ':fullscreen',
+    ':future',
+    '::grammar-error',
+    ':has',
+    '::highlight',
+    ':host',
+    ':host',
+    ':host-context',
+    ':hover',
+    ':indeterminate',
+    ':in-range',
+    ':invalid',
+    ':is',
+    ':lang',
+    ':lang',
+    ':last-child',
+    ':last-of-page',
+    ':last-of-type',
+    ':left',
+    ':link',
+    ':local-link',
+    '::marker',
+    ':matches',
+    ':not',
+    ':nth-child',
+    ':nth-col',
+    '::nth-fragment',
+    ':nth-last-child',
+    ':nth-last-col',
+    ':nth-last-of-type',
+    ':nth-of-page(n)',
+    ':nth-of-type',
+    ':only-child',
+    ':only-of-type',
+    ':optional',
+    ':out-of-range',
+    '::part',
+    ':past',
+    ':paused',
+    '::placeholder',
+    ':placeholder-shown',
+    ':playing',
+    ':read-only',
+    ':read-write',
+    ':required',
+    ':right',
+    ':root',
+    ':scope',
+    '::selection',
+    '::shadow',
+    '::slotted',
+    '::spelling-error',
+    ':start-of-page',
+    ':target',
+    '::target-text',
+    ':target-within',
+    ':user-invalid',
+    ':user-valid',
+    ':valid',
+    ':visited',
+    ':-webkit-autofill',
+    ':where',
+])
+
+export const propertyValues = asMap(['flex', 'transparent', 'none'])
+
 export const correspondingBrackets = {
     '{': '}',
     '[': ']',
     '(': ')',
 }
 
-export const misc = [':', ';', '{', '}', '[', ']', ',', '(', ')']
+export const misc = asMap([':', ';', '{', '}', '[', ']', ',', '(', ')'])
 
-export const units = ['vh', 'vw', 'px', 'rem', 'em']
+export const units = asMap([
+    'vh',
+    'vw',
+    'px',
+    'rem',
+    'em',
+    'ex',
+    'ch',
+    'vmin',
+    'vmax',
+    '%',
+])
 
-export const validCSSProperties = [
+export const validCSSProperties = asMap([
     'azimuth',
     'background',
     'background-attachment',
@@ -38,6 +162,7 @@ export const validCSSProperties = [
     'border-top-style',
     'border-top-width',
     'border-width',
+    'border-radius',
     'bottom',
     'caption-side',
     'clear',
@@ -124,9 +249,12 @@ export const validCSSProperties = [
     'width',
     'word-spacing',
     'z-index',
-]
+    'resize',
+    'opacity',
+    'caret-color',
+])
 
-export const tags = [
+export const tags = asMap([
     'a',
     'abbr',
     'acronym',
@@ -249,4 +377,4 @@ export const tags = [
     'var',
     'video',
     'wbr',
-]
+])

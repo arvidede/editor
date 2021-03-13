@@ -5,6 +5,7 @@ import {
     tags,
     misc,
     correspondingBrackets,
+    selectors,
 } from './constants'
 import './Editor.css'
 
@@ -28,11 +29,14 @@ const parseWord = (word: string) => {
         string:
             (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
             (trimmed.startsWith("'") && trimmed.endsWith("'")),
-        tag: tags.includes(trimmed),
-        entity: validCSSProperties.includes(trimmed),
-        unit: units.includes(trimmed),
+        tag: trimmed in tags,
+        entity: trimmed in validCSSProperties,
+        unit: trimmed in units,
         number: !isNaN(Number(trimmed)),
-        misc: misc.includes(trimmed),
+        var: trimmed.startsWith('--'),
+        selector: trimmed in selectors,
+        misc: trimmed in misc,
+        comment: trimmed.startsWith('/*'),
         markup: true,
     })
 
@@ -41,14 +45,22 @@ const parseWord = (word: string) => {
     return <code className={className}>{word}</code>
 }
 
-const parseRow = (row: string) => {
-    if (!row) return <p>&nbsp;</p>
-    const words = row.match(/\d+|[.#@]?\w+([-_]\w+)?|\s+|:|;|['"].+['"]|./g)!
-    return <p>{words.map(parseWord)}</p>
+const parseBlock = (block: string) => {
+    if (!block) return <div>&nbsp;</div>
+    const words =
+        block.match(
+            /\/\*[\s\S]*?(\*\/)|\/\*[\s\S]*?|\d+|[.#@]?\w+([-_]\w+)?|\s+|:\w+|:|;|['"].*['"]|--\w+(-\w+)?|./g
+        ) || []
+    return <div className='block'>{words.map(parseWord)}</div>
 }
 
 const parseCSS = (text: string) => {
-    return text.split('\n').map(parseRow)
+    const blocks =
+        text.match(
+            /\/\*[\s\S]*?(\*\/)|\/\*[\s\S]*|((?!\/\*)[\s\S])*((\n|\r)*)?|\r?\n/g
+        ) || []
+    console.log('Parsed blocks:', blocks)
+    return blocks.map(parseBlock)
 }
 export const Editor: FC<Props> = ({ className }) => {
     const [input, setInput] = useState('')
