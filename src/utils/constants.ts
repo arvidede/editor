@@ -252,6 +252,7 @@ export const validCSSProperties = asMap([
     'resize',
     'opacity',
     'caret-color',
+    'box-sizing',
 ])
 
 export const tags = asMap([

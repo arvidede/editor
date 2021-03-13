@@ -1,13 +1,18 @@
-import './App.css'
+import '../styles/App.css'
 import { Editor } from './Editor'
 /* 
 TODO:
   Feature:
   - Highlighting property values
   - Auto-indentation
+  - Row numbering
+  - Toggle comment
+  - Color preview
+  - Copy content
   Bug:
-  - Collapsing multiple spaces
-  - Jumping caret on bracket insert 
+  - Shift + tab not working
+  - Tabbing multiple lines only inserts at the final line
+  - Italic property values
 */
 
 function App() {
