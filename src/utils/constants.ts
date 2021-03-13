@@ -115,6 +115,8 @@ export const correspondingBrackets = {
     '{': '}',
     '[': ']',
     '(': ')',
+    '"': '"',
+    "'": "'",
 }
 
 export const misc = asMap([':', ';', '{', '}', '[', ']', ',', '(', ')'])

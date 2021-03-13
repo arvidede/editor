@@ -31,6 +31,8 @@ export const Editor: FC<Props> = ({ className }) => {
             case '(':
             case '[':
             case '{':
+            case '"':
+            case "'":
                 event.preventDefault()
                 const bracketPair = event.key + correspondingBrackets[event.key]
                 insertAtIndex(bracketPair, event.currentTarget.selectionEnd, 1)
