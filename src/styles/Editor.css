@@ -80,7 +80,6 @@ code {
 .selector,
 .number {
     color: #ffd580;
-    background: linear-gradient();
 }
 
 .var,
@@ -116,10 +115,13 @@ code {
     margin: 0;
     padding: 0;
     color: #707A8C66;
-    color: #707A8CCC;
     line-height: inherit;
     font-size: inherit;
     min-width: 3ch;
+}
+
+.line-numbers li.active {
+    color: #707A8CCC;
 }
 
 /*  EXAMPLES  */

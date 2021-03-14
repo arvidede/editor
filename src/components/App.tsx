@@ -9,6 +9,9 @@ TODO:
   - Toggle comment
   - Color preview
   - Copy content
+  - Custom theme
+  - Autocompletion/Suggestions
+  - Just add sass already 
   Bug:
   - Shift + tab not working
   - Tabbing multiple lines only inserts at the final line

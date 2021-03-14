@@ -11,10 +11,15 @@ interface Props {
 export const Editor: FC<Props> = ({ className }) => {
     const [input, setInput] = useState('')
     const [caretPosition, setCaretPosition] = useState<number | null>(null)
+    const [focusedLine, setFocusedLine] = useState<number | null>(null)
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLTextAreaElement>
+    ) => {
         setInput(event.target.value)
+        handleSetFocusedLine(event)
+    }
 
     const insertAtIndex = (value: string, index: number, offset: number) => {
         let string_ = input
@@ -36,11 +41,16 @@ export const Editor: FC<Props> = ({ className }) => {
                 event.preventDefault()
                 const bracketPair = event.key + correspondingBrackets[event.key]
                 insertAtIndex(bracketPair, event.currentTarget.selectionEnd, 1)
-
                 break
             case 'Tab':
                 event.preventDefault()
                 insertAtIndex('    ', event.currentTarget.selectionEnd, 4)
+                break
+            case 'ArrowUp':
+                handleSetFocusedLine(event, -1)
+                break
+            case 'ArrowDown':
+                handleSetFocusedLine(event, 1)
                 break
             default:
                 break
@@ -54,6 +64,28 @@ export const Editor: FC<Props> = ({ className }) => {
         }
     }, [caretPosition])
 
+    const handleSetFocusedLine = (
+        event:
+            | React.KeyboardEvent<HTMLTextAreaElement>
+            | React.MouseEvent<HTMLTextAreaElement>
+            | React.ChangeEvent<HTMLTextAreaElement>,
+        offset = 0
+    ) => {
+        const lineNumber =
+            event.currentTarget.value
+                .substr(0, event.currentTarget.selectionStart)
+                .split('\n').length -
+            1 +
+            offset
+
+        if (lineNumber >= 0 && lineNumber <= input.split('\n').length)
+            setFocusedLine(lineNumber)
+    }
+
+    const handleResetFocusedLine = () => {
+        setFocusedLine(null)
+    }
+
     const numRows = (input.match(/\n|\r/g) || []).length + 1
 
     return (
@@ -65,9 +97,11 @@ export const Editor: FC<Props> = ({ className }) => {
                     className='editor-input'
                     value={input}
                     ref={textAreaRef}
+                    onBlur={handleResetFocusedLine}
+                    onClick={handleSetFocusedLine}
                 ></textarea>
                 <div className='editor-output'>{parseCSS(input)}</div>
-                <LineNumbers numRows={numRows} />
+                <LineNumbers numRows={numRows} current={focusedLine} />
             </div>
         </>
     )

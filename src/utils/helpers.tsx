@@ -30,7 +30,12 @@ const parseWord = (word: string) => {
 }
 
 const parseBlock = (block: string) => {
-    if (!block) return <div>&nbsp;</div>
+    if (!block)
+        return (
+            <div>
+                <code>&nbsp;</code>
+            </div>
+        )
     const words =
         block.match(
             /\/\*[\s\S]*?(\*\/)|\/\*[\s\S]*|\d+|[.#@]?\w+([-_]\w+)?|\s+|:\w+|:|;|['"].*['"]|--\w+(-\w+)?|./g
